@@ -16,10 +16,11 @@ class MainActivity : AppCompatActivity() {
         //デフォルトの共有プリファレンスを習得
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
         //共有プリファレンス習得した値を代入
-        val inputText = pref.getString("INPUT_TEXT", "")
+        val inputTitle = pref.getString("INPUT_TITLE", "")
+        val inputDeadline = pref.getString("INPUT_DEADLINE", "")
         //値の表示
-        binding.editTitle.setText(inputText)
-
+        binding.editTitle.setText(inputTitle)
+        binding.editDeadline.setText(inputDeadline)
         //タップされた時にリスナーをセット
         binding.button.setOnClickListener { onSaveTapped() }
     }
@@ -27,7 +28,8 @@ class MainActivity : AppCompatActivity() {
     private fun onSaveTapped() {
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
         pref.edit {
-            putString("INPUT_TEXT", binding.editTitle.text.toString())
+            putString("INPUT_TITLE", binding.editTitle.text.toString())
+            putString("INPUT_DEADLINE", binding.editDeadline.text.toString())
         }
     }
 }
