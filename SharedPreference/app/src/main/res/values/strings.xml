@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">SharedPreference</string>
     <string name="bottom">保存</string>
+    <string name="editTitle">タイトル</string>
+    <string name="editDeadline">期日</string>
+
 </resources>

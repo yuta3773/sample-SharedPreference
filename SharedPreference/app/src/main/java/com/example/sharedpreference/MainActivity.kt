@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         //共有プリファレンス習得した値を代入
         val inputText = pref.getString("INPUT_TEXT", "")
         //値の表示
-        binding.editText.setText(inputText)
+        binding.editTitle.setText(inputText)
 
         //タップされた時にリスナーをセット
         binding.button.setOnClickListener { onSaveTapped() }
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     private fun onSaveTapped() {
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
         pref.edit {
-            putString("INPUT_TEXT", binding.editText.text.toString())
+            putString("INPUT_TEXT", binding.editTitle.text.toString())
         }
     }
 }
