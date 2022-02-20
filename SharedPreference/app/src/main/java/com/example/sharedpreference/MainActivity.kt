@@ -8,6 +8,7 @@ import com.example.sharedpreference.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         pref.edit {
             putString("INPUT_TITLE", binding.editTitle.text.toString())
             putString("INPUT_DEADLINE", binding.editDeadline.text.toString())
+            .commit()
         }
     }
 }
