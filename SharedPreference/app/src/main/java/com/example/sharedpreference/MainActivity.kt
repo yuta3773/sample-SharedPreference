@@ -5,9 +5,11 @@ import android.os.Bundle
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.example.sharedpreference.databinding.ActivityMainBinding
+import com.google.gson.Gson
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private var gsonDate = GsonDate()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,20 +19,26 @@ class MainActivity : AppCompatActivity() {
         //デフォルトの共有プリファレンスを習得
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
         //共有プリファレンス習得した値を代入
-        val inputTitle = pref.getString("INPUT_TITLE", "")
-        val inputDeadline = pref.getString("INPUT_DEADLINE", "")
+        val input = pref.getString("INPUT_TITLE", "")
+        gsonDate = Gson().fromJson<GsonDate>(input, GsonDate::class.java) as GsonDate
+
         //値の表示
-        binding.editTitle.setText(inputTitle)
-        binding.editDeadline.setText(inputDeadline)
+        binding.editTitle.setText(input)
+        binding.editDeadline.setText(input)
+
+        //入力された文字を代入
+        gsonDate.title = binding.editTitle.text.toString()
+        gsonDate.deadline = binding.editDeadline.text.toString()
+
         //タップされた時にリスナーをセット
         binding.button.setOnClickListener { onSaveTapped() }
     }
     //保存処理
     private fun onSaveTapped() {
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
+        val str = Gson().toJson(gsonDate)
         pref.edit {
-            putString("INPUT_TITLE", binding.editTitle.text.toString())
-            putString("INPUT_DEADLINE", binding.editDeadline.text.toString())
+            putString("INPUT_TITLE", str)
             .commit()
         }
     }
