@@ -23,15 +23,15 @@ class MainActivity : AppCompatActivity() {
         gsonDate = Gson().fromJson<GsonDate>(input, GsonDate::class.java) as GsonDate
 
         //値の表示
-        binding.editTitle.setText(input)
-        binding.editDeadline.setText(input)
-
-        //入力された文字を代入
-        gsonDate.title = binding.editTitle.text.toString()
-        gsonDate.deadline = binding.editDeadline.text.toString()
+        binding.editTitle.setText(gsonDate.title)
+        binding.editDeadline.setText(gsonDate.deadline)
 
         //タップされた時にリスナーをセット
-        binding.button.setOnClickListener { onSaveTapped() }
+        binding.button.setOnClickListener {
+            //入力された文字を代入
+            gsonDate.title = binding.editTitle.text.toString()
+            gsonDate.deadline = binding.editDeadline.text.toString()
+            onSaveTapped() }
     }
     //保存処理
     private fun onSaveTapped() {
