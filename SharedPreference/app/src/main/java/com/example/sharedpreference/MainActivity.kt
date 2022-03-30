@@ -1,11 +1,12 @@
 package com.example.sharedpreference
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.example.sharedpreference.databinding.ActivityMainBinding
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -21,13 +22,14 @@ class MainActivity : AppCompatActivity() {
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
         //共有プリファレンス習得した値を代入
         val input = pref.getString("INPUT_TITLE", "")
-        if (input != null) {
-            gsonDataList = Gson().fromJson<MutableList<GsonData>>(input, MutableList::class.java)
+        if (input != "") {
+            //配列を取り出す
+            val type = object : TypeToken<List<GsonData>>() {}.type
+            gsonDataList = Gson().fromJson<MutableList<GsonData>>(input, type) as MutableList<GsonData>
+            //値の表示
+            binding.editTitle.setText(gsonDataList[0].title)
+            binding.editDeadline.setText(gsonDataList[0].deadline)
         }
-        //値の表示
-        binding.editTitle.setText(gsonDataList.toString())
-//        binding.editDeadline.setText(gsonData.deadline)
-
         //タップされた時にリスナーをセット
         binding.button.setOnClickListener {
             //入力された文字を代入
